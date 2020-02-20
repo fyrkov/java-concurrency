@@ -15,6 +15,7 @@ public class Consumer implements Runnable {
     public void run() {
         try {
             while (true) {
+                // Blocking retrieval
                 Object o = queue.take();
                 Thread.sleep(ThreadLocalRandom.current().nextInt(1, 1000));
             }

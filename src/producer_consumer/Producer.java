@@ -16,6 +16,7 @@ public class Producer implements Runnable {
         try {
             while (true) {
                 Thread.sleep(ThreadLocalRandom.current().nextInt(1, 1000));
+                // Blocking put
                 queue.put(new Object());
             }
         } catch (InterruptedException e) {
