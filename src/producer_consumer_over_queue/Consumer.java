@@ -1,13 +1,13 @@
-package producer_consumer;
+package producer_consumer_over_queue;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class Producer implements Runnable {
+public class Consumer implements Runnable {
 
     private final BlockingQueue<Object> queue;
 
-    public Producer(BlockingQueue<Object> queue) {
+    public Consumer(BlockingQueue<Object> queue) {
         this.queue = queue;
     }
 
@@ -15,9 +15,9 @@ public class Producer implements Runnable {
     public void run() {
         try {
             while (true) {
+                // Blocking retrieval
+                Object o = queue.take();
                 Thread.sleep(ThreadLocalRandom.current().nextInt(1, 1000));
-                // Blocking put
-                queue.put(new Object());
             }
         } catch (InterruptedException e) {
             // Restoring the interrupted status after catching InterruptedException,

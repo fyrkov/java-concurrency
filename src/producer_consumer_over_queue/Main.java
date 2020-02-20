@@ -1,4 +1,4 @@
-package producer_consumer;
+package producer_consumer_over_queue;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -9,6 +9,7 @@ public class Main {
 
         int queueCapacity = 4;
         final BlockingQueue<Object> queue = new LinkedBlockingQueue<>(queueCapacity);
+
 
         final Producer producer1 = new Producer(queue);
         final Producer producer2 = new Producer(queue);
