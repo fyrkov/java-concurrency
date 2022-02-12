@@ -13,7 +13,7 @@ public class Main {
 
         List<Future<Pair>> futures = new ArrayList<>();
 
-        IntStream.range(100, 200).forEach(n -> {
+        IntStream.rangeClosed(100, 200).forEach(n -> {
             Future<Pair> result = executor.submit(() -> isPrime(n));
             futures.add(result);
         });
