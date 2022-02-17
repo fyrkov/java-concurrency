@@ -1,9 +1,9 @@
-package async_example_with_compl_future;
+package completable_future;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class Main {
+public class Auto1Example {
 
     private final ExecutorService syncJobExecutor = Executors.newFixedThreadPool(10);
 
