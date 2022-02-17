@@ -1,6 +1,5 @@
 package async_example_with_compl_future;
 
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 

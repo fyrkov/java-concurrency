@@ -3,6 +3,7 @@ package deadlock;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 public class Main {
 
@@ -14,7 +15,7 @@ public class Main {
         String secondMonitor = "second monitor";
         CountDownLatch countDownLatch = new CountDownLatch(2);
 
-        executorService.submit(new StickingThread(firstMonitor, secondMonitor, countDownLatch));
+        final Future<?> submit = executorService.submit(new StickingThread(firstMonitor, secondMonitor, countDownLatch));
         executorService.submit(new StickingThread(secondMonitor, firstMonitor, countDownLatch));
 
     }
@@ -43,7 +44,7 @@ public class Main {
                 }
                 System.out.println(Thread.currentThread().getName() + " awaits for " + first.toString());
                 synchronized (first) {
-                    System.out.println(Thread.currentThread().getName() + " acquired " + second.toString() + ". This should not happen");
+                    System.out.println(Thread.currentThread().getName() + " acquired " + second + ". This should not happen");
                 }
             }
         }
