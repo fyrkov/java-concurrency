@@ -6,11 +6,6 @@ import java.util.stream.IntStream;
 // Spider has eight legs that should move in a defined order
 public class Main {
 
-    public static void moveLeg(int n) throws InterruptedException {
-        Thread.sleep(100);
-        System.out.println("Leg " + n + " moved");
-    }
-
     public static void main(String[] args) throws InterruptedException {
         // Fairness = true guarantees acquiring order
         Semaphore semaphore = new Semaphore(1, true);
@@ -18,23 +13,28 @@ public class Main {
 
         IntStream.rangeClosed(1, 8).forEach(i ->
                 new Thread(() -> {
-                    while (true) {
+                    while (!Thread.currentThread().isInterrupted()) {
                         try {
                             semaphore.acquire();
                             moveLeg(i);
-                            semaphore.release();
                         } catch (InterruptedException e) {
-                            // ignored
+                            Thread.currentThread().interrupt();
+                        } finally {
+                            semaphore.release();
                         }
                     }
                 }).start());
 
         semaphore.release();
         blockMainThread();
-        return;
     }
 
-    private static void blockMainThread() throws InterruptedException {
+    private static void moveLeg(int n) throws InterruptedException {
+        Thread.sleep(200);
+        System.out.println("Leg " + n + " moved");
+    }
+
+    private static synchronized void blockMainThread() throws InterruptedException {
         Object o = new Object();
         synchronized (o) {
             o.wait();
